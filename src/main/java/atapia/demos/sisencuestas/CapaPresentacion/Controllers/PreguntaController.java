@@ -1,7 +1,9 @@
 package atapia.demos.sisencuestas.CapaPresentacion.Controllers;
 
 
+import atapia.demos.sisencuestas.CapaModelo.DTO.EncuestaDTO;
 import atapia.demos.sisencuestas.CapaModelo.DTO.PreguntaDTO;
+import atapia.demos.sisencuestas.CapaNegocio.Services.EncuestaService;
 import atapia.demos.sisencuestas.CapaNegocio.Services.PreguntaService;
 import atapia.demos.sisencuestas.SwaggerDocs.PreguntasDocs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.Map;
 public class PreguntaController implements PreguntasDocs {
     @Autowired
     PreguntaService preguntaService;
+    @Autowired
+    EncuestaService encuestaService;
 
     @GetMapping("/api/v1/preguntas")
     public List<PreguntaDTO> listarPreguntas() {
@@ -38,9 +42,10 @@ public class PreguntaController implements PreguntasDocs {
         return this.preguntaService.buscarPreguntasPorEncuesta(id);
     }
 
-    @PostMapping("/api/v1/pregunta")
-    public ResponseEntity<PreguntaDTO> agregarPregunta(@RequestBody PreguntaDTO preguntaDto) throws Exception{
-        PreguntaDTO pregunta = this.preguntaService.agregarActualizar(preguntaDto);
+    @PostMapping("/api/v1/pregunta/encuesta/{id}")
+    public ResponseEntity<PreguntaDTO> agregarPreguntaAEncuesta(@PathVariable int id, @RequestBody PreguntaDTO preguntaDto) throws Exception{
+        EncuestaDTO encuesta = this.encuestaService.buscarPorId(id);
+        PreguntaDTO pregunta = this.preguntaService.agregarActualizar(preguntaDto, encuesta.getIdEncuesta());
         if(pregunta != null){
             return ResponseEntity.ok(pregunta);
         }else{
@@ -53,7 +58,7 @@ public class PreguntaController implements PreguntasDocs {
         PreguntaDTO preguntaDTO = this.preguntaService.buscarPorId(id);
         if (preguntaDTO != null){
             preguntaDTO.setNombre_pregunta(preguntaRecibida.getNombre_pregunta());
-            preguntaDTO = this.preguntaService.agregarActualizar(preguntaDTO);
+            preguntaDTO = this.preguntaService.agregarActualizar(preguntaDTO, preguntaDTO.getEncuesta().getIdEncuesta());
             return ResponseEntity.ok(preguntaDTO);
         }else{
             throw new Exception("No se pudo editar el registro por que no existe en la base de datos");
@@ -64,7 +69,7 @@ public class PreguntaController implements PreguntasDocs {
     public ResponseEntity<Map<String, Boolean>> eliminarEncuesta(@PathVariable int id) throws Exception{
         PreguntaDTO preguntaDTO = this.preguntaService.buscarPorId(id);
         if (preguntaDTO != null){
-            this.preguntaService.eliminarPorId(preguntaDTO.getId_pregunta());
+            this.preguntaService.eliminarPorId(preguntaDTO.getIdPregunta());
             Map<String, Boolean> respuesta = new HashMap<>();
             respuesta.put("Eliminado", true);
             return ResponseEntity.ok(respuesta);

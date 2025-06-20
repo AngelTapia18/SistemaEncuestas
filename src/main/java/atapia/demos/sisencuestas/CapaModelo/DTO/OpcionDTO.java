@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OpcionDTO {
-    Integer id_opcion;
+    Integer idOpcion;
     String nombre_opcion;
     PreguntaDTO pregunta;
 }

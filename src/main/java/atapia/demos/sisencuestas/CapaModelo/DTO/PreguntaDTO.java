@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PreguntaDTO {
-    Integer id_pregunta;
+    Integer idPregunta;
     String nombre_pregunta;
     EncuestaDTO encuesta;
 }

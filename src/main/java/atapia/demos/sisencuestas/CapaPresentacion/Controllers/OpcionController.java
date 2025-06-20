@@ -59,7 +59,7 @@ public class OpcionController implements OpcionDocs {
     public ResponseEntity<Map<String, Boolean>> eliminarPregunta(@PathVariable int id) throws Exception{
         OpcionDTO opcionDTO = this.opcionService.buscarPorId(id);
         if (opcionDTO != null){
-            this.opcionService.eliminarPorId(opcionDTO.getId_opcion());
+            this.opcionService.eliminarPorId(opcionDTO.getIdOpcion());
             Map<String, Boolean> respuesta = new HashMap<>();
             respuesta.put("Eliminado", true);
             return ResponseEntity.ok(respuesta);

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +19,6 @@ public class Encuesta implements Serializable {
     @Column(name="id_encuesta")
     Integer idEncuesta;
     String nombre_encuesta;
+    @OneToMany(mappedBy = "encuesta", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Pregunta> preguntas;
 }

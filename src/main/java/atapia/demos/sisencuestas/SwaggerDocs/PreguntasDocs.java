@@ -99,7 +99,7 @@ public interface PreguntasDocs {
                     )
             }
     )
-    ResponseEntity<PreguntaDTO> agregarPregunta(@RequestBody PreguntaDTO preguntaDto) throws Exception;
+    ResponseEntity<PreguntaDTO> agregarPreguntaAEncuesta(@PathVariable int id, @RequestBody PreguntaDTO preguntaDto) throws Exception;
 
     @Operation(
             summary = "Actualizar la informacion de la pregunta buscada por su ID",

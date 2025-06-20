@@ -48,7 +48,7 @@ public interface EncuestaDocs {
     List<EncuestaDTO> listarEncuestas();
 
     @Operation(
-            summary = "Buscar Empresa por ID",
+            summary = "Buscar Encuesta por ID",
             description = "Este endpoint devuelve un objeto JSON con la informacion de una empresa especificada por su id",
             responses = {
                     @ApiResponse(

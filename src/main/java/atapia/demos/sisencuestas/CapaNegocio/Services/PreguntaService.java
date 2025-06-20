@@ -1,9 +1,13 @@
 package atapia.demos.sisencuestas.CapaNegocio.Services;
 
+import atapia.demos.sisencuestas.CapaModelo.DTO.EncuestaDTO;
 import atapia.demos.sisencuestas.CapaModelo.DTO.PreguntaDTO;
+import atapia.demos.sisencuestas.CapaModelo.Entidades.Encuesta;
 import atapia.demos.sisencuestas.CapaModelo.Entidades.Pregunta;
+import atapia.demos.sisencuestas.CapaModelo.Mappers.EncuestaMapper;
 import atapia.demos.sisencuestas.CapaModelo.Mappers.PreguntaMapper;
 import atapia.demos.sisencuestas.CapaNegocio.Interfaces.IPreguntaService;
+import atapia.demos.sisencuestas.CapaPersistencia.EncuestaRepository;
 import atapia.demos.sisencuestas.CapaPersistencia.PreguntaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +20,11 @@ public class PreguntaService implements IPreguntaService {
     @Autowired
     PreguntaRepository preguntaRepository;
     @Autowired
+    EncuestaRepository encuestaRepository;
+    @Autowired
     PreguntaMapper preguntaMapper;
+    @Autowired
+    EncuestaMapper encuestaMapper;
 
     @Override
     public List<PreguntaDTO> listar() {
@@ -34,7 +42,9 @@ public class PreguntaService implements IPreguntaService {
     }
 
     @Override
-    public PreguntaDTO agregarActualizar(PreguntaDTO preguntaDto) {
+    public PreguntaDTO agregarActualizar(PreguntaDTO preguntaDto, Integer idEncuesta) {
+        EncuestaDTO encuestaDto = this.encuestaRepository.findById(idEncuesta).map(this.encuestaMapper::encuestaToDTO).orElse(null);
+        preguntaDto.setEncuesta(encuestaDto);
         Pregunta pregunta = this.preguntaMapper.preguntaDTOtoEntity(preguntaDto);
         return this.preguntaMapper.preguntaToDTO(this.preguntaRepository.save(pregunta));
     }

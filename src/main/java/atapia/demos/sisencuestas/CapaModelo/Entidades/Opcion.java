@@ -15,9 +15,10 @@ import java.io.Serializable;
 public class Opcion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id_opcion;
+    @Column(name="id_opcion")
+    Integer idOpcion;
     String nombre_opcion;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_pregunta", referencedColumnName = "id_pregunta")
     Pregunta pregunta;
 }
