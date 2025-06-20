@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class OpcionDTO {
     Integer id_opcion;
     String nombre_opcion;
-    PreguntaDTO preguntaDTO;
+    PreguntaDTO pregunta;
 }

@@ -33,7 +33,7 @@ public class PreguntaController implements PreguntasDocs {
         }
     }
 
-    @GetMapping("/api/v1/pregunta/encuesta/{id}")
+    @GetMapping("/api/v1/preguntas/encuesta/{id}")
     public List<PreguntaDTO> buscarPreguntasPorEncuesta(@PathVariable int id){
         return this.preguntaService.buscarPreguntasPorEncuesta(id);
     }

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class PreguntaDTO {
     Integer id_pregunta;
     String nombre_pregunta;
-    EncuestaDTO encuestaDTO;
+    EncuestaDTO encuesta;
 }
