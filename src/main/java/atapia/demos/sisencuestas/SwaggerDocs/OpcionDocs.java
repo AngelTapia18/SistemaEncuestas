@@ -74,6 +74,33 @@ public interface OpcionDocs {
     ResponseEntity<OpcionDTO> buscarOpcionPorId(@PathVariable int id) throws Exception;
 
     @Operation(
+            summary = "Buscar opciones pertenecientes a una pregunta ",
+            description = "Este endpoint devuelve un listado de opciones para una pregunta especificada por su ID",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Datos de la empresa obtenidos",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = OpcionDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error interno del servidor",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+//                                name = "Error",
+                                            value = "{ \"Error\": 500, \"Descripcion\": \"No se puede obtener la informacion\"}"
+                                    )
+                            )
+                    )
+            }
+    )
+    List<OpcionDTO> buscarOpcionesPorPregunta(@PathVariable int id);
+
+    @Operation(
             summary = "Agregar nueva opcion a pregunta",
             description = "Este endpoint permite agregar una nueva opcion de respuesta a una pregunta registrada",
             responses = {
@@ -98,7 +125,7 @@ public interface OpcionDocs {
                     )
             }
     )
-    ResponseEntity<OpcionDTO> agregarPregunta(@RequestBody OpcionDTO opcionDTO) throws Exception;
+    ResponseEntity<OpcionDTO> agregarOpcionAPregunta(@PathVariable int id, @RequestBody OpcionDTO opcionDTO) throws Exception;
 
     @Operation(
             summary = "Actualizar la informacion de la opcion por su ID",
@@ -125,7 +152,7 @@ public interface OpcionDocs {
                     )
             }
     )
-    ResponseEntity<OpcionDTO> actualizarPregunta(@PathVariable int id, @RequestBody OpcionDTO opcionRecibida) throws Exception;
+    ResponseEntity<OpcionDTO> actualizarOpcion(@PathVariable int id, @RequestBody OpcionDTO opcionRecibida) throws Exception;
 
 
     @Operation(
@@ -153,5 +180,5 @@ public interface OpcionDocs {
                     )
             }
     )
-    ResponseEntity<Map<String, Boolean>> eliminarPregunta(@PathVariable int id) throws Exception;
+    ResponseEntity<Map<String, Boolean>> eliminarOpcion(@PathVariable int id) throws Exception;
 }

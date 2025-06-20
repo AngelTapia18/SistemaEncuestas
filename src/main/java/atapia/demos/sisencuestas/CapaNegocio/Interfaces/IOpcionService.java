@@ -7,6 +7,7 @@ import java.util.List;
 public interface IOpcionService {
     List<OpcionDTO> listar();
     OpcionDTO buscarPorId(Integer idOpcion);
-    OpcionDTO agregarActualizar(OpcionDTO opcion);
+    List<OpcionDTO> buscarOpcionesPorPregunta(Integer idEncuesta);
+    OpcionDTO agregarActualizar(OpcionDTO opcion, Integer idPregunta);
     void eliminarPorId(Integer idOpcion);
 }

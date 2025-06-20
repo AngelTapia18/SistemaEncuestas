@@ -18,7 +18,7 @@ public class Opcion implements Serializable {
     @Column(name="id_opcion")
     Integer idOpcion;
     String nombre_opcion;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "id_pregunta", referencedColumnName = "id_pregunta")
     Pregunta pregunta;
 }

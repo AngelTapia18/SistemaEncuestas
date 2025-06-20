@@ -2,7 +2,9 @@ package atapia.demos.sisencuestas.CapaPresentacion.Controllers;
 
 
 import atapia.demos.sisencuestas.CapaModelo.DTO.OpcionDTO;
+import atapia.demos.sisencuestas.CapaModelo.DTO.PreguntaDTO;
 import atapia.demos.sisencuestas.CapaNegocio.Services.OpcionService;
+import atapia.demos.sisencuestas.CapaNegocio.Services.PreguntaService;
 import atapia.demos.sisencuestas.SwaggerDocs.OpcionDocs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,17 @@ import java.util.Map;
 public class OpcionController implements OpcionDocs {
     @Autowired
     OpcionService opcionService;
+    @Autowired
+    PreguntaService preguntaService;
 
     @GetMapping("/api/v1/opciones")
     public List<OpcionDTO> listarOpciones() {
         return this.opcionService.listar();
+    }
+
+    @GetMapping("/api/v1/opcion/pregunta/{id}")
+    public List<OpcionDTO> buscarOpcionesPorPregunta(@PathVariable int id){
+        return this.opcionService.buscarOpcionesPorPregunta(id);
     }
 
     @GetMapping("/api/v1/opcion/{id}")
@@ -33,9 +42,10 @@ public class OpcionController implements OpcionDocs {
         }
     }
 
-    @PostMapping("/api/v1/opcion")
-    public ResponseEntity<OpcionDTO> agregarPregunta(@RequestBody OpcionDTO opcionDTO) throws Exception{
-        OpcionDTO opcion = this.opcionService.agregarActualizar(opcionDTO);
+    @PostMapping("/api/v1/opcion/pregunta/{id}")
+    public ResponseEntity<OpcionDTO> agregarOpcionAPregunta(@PathVariable int id, @RequestBody OpcionDTO opcionDTO) throws Exception{
+        PreguntaDTO pregunta = this.preguntaService.buscarPorId(id);
+        OpcionDTO opcion = this.opcionService.agregarActualizar(opcionDTO, pregunta.getIdPregunta());
         if(opcion != null){
             return ResponseEntity.ok(opcion);
         }else{
@@ -44,11 +54,11 @@ public class OpcionController implements OpcionDocs {
     }
 
     @PutMapping("/api/v1/opcion/{id}")
-    public ResponseEntity<OpcionDTO> actualizarPregunta(@PathVariable int id, @RequestBody OpcionDTO opcionRecibida) throws Exception{
+    public ResponseEntity<OpcionDTO> actualizarOpcion(@PathVariable int id, @RequestBody OpcionDTO opcionRecibida) throws Exception{
         OpcionDTO opcionDTO = this.opcionService.buscarPorId(id);
         if (opcionDTO != null){
             opcionDTO.setNombre_opcion(opcionRecibida.getNombre_opcion());
-            opcionDTO = this.opcionService.agregarActualizar(opcionDTO);
+            opcionDTO = this.opcionService.agregarActualizar(opcionDTO, opcionDTO.getPregunta().getIdPregunta());
             return ResponseEntity.ok(opcionDTO);
         }else{
             throw new Exception("No se pudo editar el registro por que no existe en la base de datos");
@@ -56,7 +66,7 @@ public class OpcionController implements OpcionDocs {
     }
 
     @DeleteMapping("/api/v1/opcion/{id}")
-    public ResponseEntity<Map<String, Boolean>> eliminarPregunta(@PathVariable int id) throws Exception{
+    public ResponseEntity<Map<String, Boolean>> eliminarOpcion(@PathVariable int id) throws Exception{
         OpcionDTO opcionDTO = this.opcionService.buscarPorId(id);
         if (opcionDTO != null){
             this.opcionService.eliminarPorId(opcionDTO.getIdOpcion());

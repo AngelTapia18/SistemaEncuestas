@@ -2,7 +2,7 @@ FROM eclipse-temurin:21
 
 WORKDIR /app
 
-COPY target/sgt-0.0.1-SNAPSHOT.jar app.jar
+COPY target/Sistema-de-encuestas-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
