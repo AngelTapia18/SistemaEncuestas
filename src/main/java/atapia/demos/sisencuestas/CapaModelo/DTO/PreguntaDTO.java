@@ -1,6 +1,5 @@
 package atapia.demos.sisencuestas.CapaModelo.DTO;
 
-import atapia.demos.sisencuestas.CapaModelo.Entidades.Encuesta;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
