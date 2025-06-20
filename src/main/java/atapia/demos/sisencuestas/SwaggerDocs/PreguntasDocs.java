@@ -75,6 +75,33 @@ public interface PreguntasDocs {
     ResponseEntity<PreguntaDTO> buscarPreguntaPorId(@PathVariable int id) throws Exception;
 
     @Operation(
+            summary = "Obtener listado de todas las preguntas pertenecientes a una encuesta por su ID",
+            description = "Este endpoint devuelve una lista de todas las preguntas relacionadas a una encuesta",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Lista obtenida correctamente",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = PreguntaDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error interno del servidor",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(
+//                                name = "Error",
+                                            value = "{ \"Error\": 500, \"Descripcion\": \"No se pudo listar elementos\"}"
+                                    )
+                            )
+                    )
+            }
+    )
+    List<PreguntaDTO> buscarPreguntasPorEncuesta(@PathVariable int id);
+
+    @Operation(
             summary = "Agregar nueva pregunta",
             description = "Este endpoint permite agregar una nueva pregunta relacionada a una encuesta",
             responses = {
@@ -155,4 +182,7 @@ public interface PreguntasDocs {
             }
     )
     ResponseEntity<Map<String, Boolean>> eliminarEncuesta(@PathVariable int id) throws Exception;
+
+
+
 }
