@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("sistema-encuestas-app")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OpcionController implements OpcionDocs {
     @Autowired
     OpcionService opcionService;
