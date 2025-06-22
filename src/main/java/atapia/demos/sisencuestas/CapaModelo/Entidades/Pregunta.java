@@ -22,6 +22,6 @@ public class Pregunta implements Serializable {
     @JoinColumn(name = "id_encuesta", referencedColumnName = "id_encuesta")
     Encuesta encuesta;
 
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.REMOVE, orphanRemoval = false)
     private List<Opcion> opciones;
 }
