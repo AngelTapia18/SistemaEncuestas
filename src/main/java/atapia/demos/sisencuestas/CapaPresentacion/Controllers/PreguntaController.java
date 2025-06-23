@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("sistema-encuestas-app")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PreguntaController implements PreguntasDocs {
     @Autowired
     PreguntaService preguntaService;

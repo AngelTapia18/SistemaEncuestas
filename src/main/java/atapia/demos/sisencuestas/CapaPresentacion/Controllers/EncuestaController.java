@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("sistema-encuestas-app")
-@CrossOrigin(origins = "http://localhost:4200")
 public class EncuestaController implements EncuestaDocs {
     @Autowired
     EncuestaService encuestaService;
